@@ -12,11 +12,13 @@ public class UnitTest1 : VerifySourceGenerator
     }
 
     [TestMethod]
-    public async Task test()
+    public async Task EnumWithOneMember()
     {
         var source = """
-                     using System;
-                     public partial class TestMe { }
+                     enum Foo
+                     {
+                        Bar,
+                     }
                      """;
 
         await Verify(source);
