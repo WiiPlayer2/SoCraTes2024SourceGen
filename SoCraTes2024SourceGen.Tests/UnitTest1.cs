@@ -23,4 +23,19 @@ public class UnitTest1 : VerifySourceGenerator
 
         await Verify(source);
     }
+
+    [TestMethod]
+    public async Task EnumInsideNestedNamespace()
+    {
+        var source = """
+                     namespace Foooo.Baaaar;
+                     
+                     enum Foo
+                     {
+                        Bar,
+                     }
+                     """;
+
+        await Verify(source);
+    }
 }

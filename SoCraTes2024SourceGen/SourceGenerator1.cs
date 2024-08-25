@@ -22,7 +22,9 @@ public class SourceGenerator1 : IIncrementalGenerator
                 {
                     var declaredSymbol = (INamedTypeSymbol) syntaxContext.SemanticModel
                         .GetDeclaredSymbol(syntaxContext.Node, token)!;
-                    var namespaceName = declaredSymbol.ContainingNamespace?.Name;
+                    var namespaceName = declaredSymbol.ContainingNamespace.IsGlobalNamespace
+                        ? default
+                        : declaredSymbol.ContainingNamespace?.ToString();
                     var name = declaredSymbol.Name;
                     var members = declaredSymbol.MemberNames.ToImmutableList();
                     return new EnumInfo(namespaceName, name, members);
