@@ -8,7 +8,8 @@ using Microsoft.CodeAnalysis.Text;
 internal record EnumInfo(
     string? Namespace,
     string Name,
-    IReadOnlyList<string> Members);
+    IReadOnlyList<string> Members,
+    Location Location);
 
 [Generator]
 public class SourceGenerator1 : IIncrementalGenerator
@@ -27,15 +28,27 @@ public class SourceGenerator1 : IIncrementalGenerator
                         : declaredSymbol.ContainingNamespace?.ToString();
                     var name = declaredSymbol.Name;
                     var members = declaredSymbol.MemberNames.ToImmutableList();
-                    return new EnumInfo(namespaceName, name, members);
+                    return new EnumInfo(namespaceName, name, members, declaredSymbol.Locations.Last());
                 });
         context.RegisterSourceOutput(
             enumInfoProvider,
             (productionContext, info) =>
             {
                 if (info.Members.Count == 0)
+                {
+                    productionContext.ReportDiagnostic(
+                        Diagnostic.Create(
+                            "SOCRATES001",
+                            "BS",
+                            "No matcher for zero member enums!",
+                            DiagnosticSeverity.Warning,
+                            DiagnosticSeverity.Warning,
+                            true,
+                            1,
+                            location: info.Location));
                     return;
-                
+                }
+
                 productionContext.AddSource(
                     $"{info.Namespace}.{info.Name}.g.cs",
                     info.Members.Count == 1

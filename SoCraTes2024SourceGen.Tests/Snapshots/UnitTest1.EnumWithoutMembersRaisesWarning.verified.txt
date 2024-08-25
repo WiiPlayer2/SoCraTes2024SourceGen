@@ -1,0 +1,16 @@
+﻿{
+  Diagnostics: [
+    {
+      Id: SOCRATES001,
+      Title: ,
+      Severity: Warning,
+      WarningLevel: 1,
+      Location: : (0,5)-(0,8),
+      Description: ,
+      HelpLink: ,
+      MessageFormat: No matcher for zero member enums!,
+      Message: No matcher for zero member enums!,
+      Category: BS
+    }
+  ]
+}

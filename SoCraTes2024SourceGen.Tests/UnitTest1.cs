@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.CodeAnalysis;
 
 namespace SoCraTes2024SourceGen.Tests;
 
@@ -68,5 +69,21 @@ public class UnitTest1 : VerifySourceGenerator
                         BarBarBar,
                      }
                      """);
+    }
+
+    [TestMethod]
+    public async Task EnumWithoutMembersRaisesWarning()
+    {
+        await Verify("""
+                     enum Foo
+                     {
+                     }
+                     """,
+            (compilation, diagnostics) =>
+            {
+                Assert.IsTrue(diagnostics.Any(x =>
+                    x.Severity == DiagnosticSeverity.Warning
+                    && x.GetMessage() == "No matcher for zero member enums!"));
+            });
     }
 }
