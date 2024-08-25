@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -6,7 +7,7 @@ namespace SoCraTes2024SourceGen.Tests;
 
 public abstract class VerifySourceGenerator : VerifyBase
 {
-    protected SettingsTask Verify(string source, Action<Compilation, ImmutableArray<Diagnostic>>? verifyCompilation)
+    protected SettingsTask Verify([StringSyntax("csharp")] string source, Action<Compilation, ImmutableArray<Diagnostic>>? verifyCompilation)
     {
         var syntaxTree = CSharpSyntaxTree.ParseText(source);
 
@@ -38,7 +39,7 @@ public abstract class VerifySourceGenerator : VerifyBase
             .UseDirectory("Snapshots");
     }
 
-    protected SettingsTask Verify(string source) =>
+    protected SettingsTask Verify([StringSyntax("csharp")] string source) =>
         Verify(source, (compilation, _) =>
         {
             var diagnostics = compilation.GetDiagnostics();

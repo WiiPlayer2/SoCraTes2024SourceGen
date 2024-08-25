@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace SoCraTes2024SourceGen.Tests;
 
 [TestClass]
@@ -6,65 +8,65 @@ public class UnitTest1 : VerifySourceGenerator
     [TestMethod]
     public async Task Empty()
     {
-        var source = string.Empty;
+        await Verify(string.Empty);
+    }
 
-        await Verify(source);
+    [TestMethod]
+    public async Task EnumWithoutMembers()
+    {
+        await Verify("""
+                     enum Foo
+                     {
+                     }
+                     """);
     }
 
     [TestMethod]
     public async Task EnumWithOneMember()
     {
-        var source = """
+        await Verify("""
                      enum Foo
                      {
                         Bar,
                      }
-                     """;
-
-        await Verify(source);
+                     """);
     }
 
     [TestMethod]
     public async Task EnumInsideNestedNamespace()
     {
-        var source = """
+        await Verify("""
                      namespace Foooo.Baaaar;
-                     
+
                      enum Foo
                      {
                         Bar,
                      }
-                     """;
-
-        await Verify(source);
+                     """);
     }
 
     [TestMethod]
     public async Task EnumWithTwoMembers()
     {
-        var source = """
+        await Verify("""
                      enum Foo
                      {
                         Bar,
                         BarBar,
                      }
-                     """;
-
-        await Verify(source);
+                     """);
     }
 
     [TestMethod]
     public async Task EnumWithThreeMembers()
     {
-        var source = """
+        await Verify("""
                      enum Foo
                      {
                         Bar,
                         BarBar,
                         BarBarBar,
                      }
-                     """;
-
-        await Verify(source);
+                     """);
     }
 }

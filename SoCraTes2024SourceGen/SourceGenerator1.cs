@@ -33,6 +33,9 @@ public class SourceGenerator1 : IIncrementalGenerator
             enumInfoProvider,
             (productionContext, info) =>
             {
+                if (info.Members.Count == 0)
+                    return;
+                
                 productionContext.AddSource(
                     $"{info.Namespace}.{info.Name}.g.cs",
                     info.Members.Count == 1
