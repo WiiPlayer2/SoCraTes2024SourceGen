@@ -38,4 +38,33 @@ public class UnitTest1 : VerifySourceGenerator
 
         await Verify(source);
     }
+
+    [TestMethod]
+    public async Task EnumWithTwoMembers()
+    {
+        var source = """
+                     enum Foo
+                     {
+                        Bar,
+                        BarBar,
+                     }
+                     """;
+
+        await Verify(source);
+    }
+
+    [TestMethod]
+    public async Task EnumWithThreeMembers()
+    {
+        var source = """
+                     enum Foo
+                     {
+                        Bar,
+                        BarBar,
+                        BarBarBar,
+                     }
+                     """;
+
+        await Verify(source);
+    }
 }
