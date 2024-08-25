@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Waldemar Tomme",
+    "classifications": [ "Source Generator", "Analyzer" ],
+    "identity": "DarkLink.Templates.SourceGenerator.CSharp.Empty",
+    "name": "Source Generator (C#, Empty)",
+    "shortName": "sourcegenerator-cs-empty",
+    "sourceName": "SoCraTes2024SourceGen",
+    "primaryOutputs": [
+        {
+            "path": "SoCraTes2024SourceGen.Playground/SoCraTes2024SourceGen.Playground.csproj",
+            "condition": "(AddPlaygroundProject)"
+        }
+    ],
+    "symbols": {
+        "AddPlaygroundProject": {
+            "type": "parameter",
+            "description": "Adds a playground project which uses the source generator.",
+            "datatype": "bool",
+            "defaultValue": "true"
+        }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "(!AddPlaygroundProject)",
+                    "exclude": [
+                        "SoCraTes2024SourceGen.Playground/**/*"
+                    ]
+                }
+            ]
+        }
+    ]
+}
